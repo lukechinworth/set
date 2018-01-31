@@ -4,14 +4,19 @@ import { deck } from './set';
 
 Vue.use(Vuex);
 
-console.table(deck);
 export default new Vuex.Store({
     state: {
-        cards: [],
-        deck,
+        set: [],
+        deck
     },
     mutations: {
-
+        selectCard: (state, card) => {
+            console.log(card)
+            state.set.push(card);
+        }
+    },
+    getters: {
+        board: ({ deck }) => deck.slice(0, 12)
     }
 });
 

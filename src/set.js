@@ -1,16 +1,31 @@
 import { baseN } from 'js-combinatorics';
+import { knuthShuffle } from 'knuth-shuffle';
 
 export const numbers = [1, 2, 3];
 export const colors = ['red', 'green', 'blue'];
 export const shapes = ['pill', 'diamond', 'wave'];
 export const fills = ['solid', 'empty', 'stripes'];
 
+export const numberOfOptionsPerAttribute = numbers.length;
+
 export const attributes = [numbers, colors, shapes, fills];
 
-/**
- * 4 attributes, each of 3 options.
- * the deck is all possible combinations of those attributes, i.e. 3^4.
- * each card is array of 4 numbers.
- * The index is an attribute; the value is option.
- */
-export const deck = baseN([0, 1, 2], 4).toArray();
+export const numberOfAttributes = attributes.length;
+
+// source of truth
+export const cardArrays = baseN(Array.from(Array(numberOfOptionsPerAttribute).keys()), numberOfAttributes).toArray();
+
+export const numberOfCards = cardArrays.length;
+
+export const deck = knuthShuffle(Array.from(Array(numberOfCards).keys()));
+
+export const cardObjects = cardArrays.map(c => ({
+    number: numbers[c[0]],
+    color: colors[c[1]],
+    shape: shapes[c[2]],
+    fill: fills[c[3]]
+}));
+
+// @TODO: finish this
+export const isSet = set => set.length === 3
+    && set[1]
