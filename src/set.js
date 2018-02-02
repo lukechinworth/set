@@ -1,5 +1,6 @@
 import { baseN } from 'js-combinatorics';
 import { knuthShuffle } from 'knuth-shuffle';
+import { transpose } from 'mathjs';
 
 export const numbers = [1, 2, 3];
 export const colors = ['red', 'green', 'blue'];
@@ -27,6 +28,16 @@ export const cardObjects = cardArrays.map(c => ({
     fill: fills[c[3]]
 }));
 
-// @TODO: finish this
-export const isSet = set => set.length === 3
-    && set[0]
+export const isSet = set => {
+    const cardRows = set.map(cardId => cardArrays[cardId]);
+    const attributeRows = transpose(cardRows);
+
+    return attributeRows.every(allSameOrAllDifferent)
+}
+
+function allSameOrAllDifferent(options) {
+    const uniqueValueCount = (new Set(options)).size;
+
+    return uniqueValueCount === 1
+        || uniqueValueCount === options.length
+}
