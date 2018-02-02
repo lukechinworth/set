@@ -4,7 +4,7 @@
 
 <script>
 import SetCard from './SetCard.vue';
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import { cardObjects } from '../set';
 
 export default {
@@ -17,15 +17,27 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'selectCard'
+            'handleCardClick'
         ])
     },
     computed: {
+        ...mapState([
+            'set'
+        ]),
+        isSelected() {
+            return this.set.includes(this.id);
+        },
+        cardObject() {
+            return cardObjects[this.id];
+        },
+        handleClick() {
+            return this.handleCardClick.bind(null, this.id)
+        },
         card() {
             return {
-                // @TODO: bind card number here
-                select: this.selectCard,
-                ...cardObjects[this.id]
+                isSelected: this.isSelected,
+                handleClick: this.handleClick,
+                ...this.cardObject
             };
         }
     }

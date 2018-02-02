@@ -10,9 +10,13 @@ export default new Vuex.Store({
         deck
     },
     mutations: {
-        selectCard: (state, card) => {
-            console.log(card)
-            state.set.push(card);
+        handleCardClick: (state, cardId) => {
+            if (state.set.includes(cardId)) {
+                state.set = state.set.filter(setCardId => setCardId !== cardId);
+                return;
+            }
+
+            state.set.push(cardId);
         }
     },
     getters: {
