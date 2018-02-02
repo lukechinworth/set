@@ -19,4 +19,3 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 ## TODO
 * write `isSet`
-* bind card id to click handler
