@@ -17,6 +17,7 @@ export const cardArrays = baseN(Array.from(Array(numberOfOptionsPerAttribute).ke
 
 export const numberOfCards = cardArrays.length;
 
+// [0, 1, ..., numberOfCards - 1]
 export const deck = knuthShuffle(Array.from(Array(numberOfCards).keys()));
 
 export const cardObjects = cardArrays.map(c => ({
@@ -28,4 +29,4 @@ export const cardObjects = cardArrays.map(c => ({
 
 // @TODO: finish this
 export const isSet = set => set.length === 3
-    && set[1]
+    && set[0]
