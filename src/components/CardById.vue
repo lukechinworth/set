@@ -35,7 +35,9 @@ export default {
         },
         card() {
             return {
-                isSelected: this.isSelected,
+                classes: {
+                    selected: this.isSelected
+                },
                 handleClick: this.handleClick,
                 ...this.cardObject
             };
