@@ -14,7 +14,7 @@ export const attributes = [numbers, colors, shapes, fills];
 export const numberOfAttributes = attributes.length;
 
 // source of truth
-export const cardArrays = baseN(Array.from(Array(numberOfOptionsPerAttribute).keys()), numberOfAttributes).toArray();
+export const cardArrays = baseN([0, 1, 2], 4).toArray();
 
 export const numberOfCards = cardArrays.length;
 
@@ -29,6 +29,10 @@ export const cardObjects = cardArrays.map(c => ({
 }));
 
 export const isSet = set => {
+    if (set.length < numberOfOptionsPerAttribute) {
+        return false;
+    }
+
     const cardRows = set.map(cardId => cardArrays[cardId]);
     const attributeRows = transpose(cardRows);
 

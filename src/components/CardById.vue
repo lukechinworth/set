@@ -4,7 +4,7 @@
 
 <script>
 import SetCard from './SetCard.vue';
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import { cardObjects } from '../set';
 
 export default {
@@ -16,16 +16,16 @@ export default {
         id: Number
     },
     methods: {
-        ...mapMutations([
+        ...mapActions([
             'handleCardClick'
         ])
     },
     computed: {
         ...mapState([
-            'set'
+            'selectedCardIds'
         ]),
         isSelected() {
-            return this.set.includes(this.id);
+            return this.selectedCardIds.includes(this.id);
         },
         cardObject() {
             return cardObjects[this.id];

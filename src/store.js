@@ -6,24 +6,42 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        set: [],
+        selectedCardIds: [],
         deck
     },
     mutations: {
-        handleCardClick: (state, cardId) => {
-            if (state.set.includes(cardId)) {
-                state.set = state.set.filter(setCardId => setCardId !== cardId);
-                return;
+        SET_SELECTED_CARD_IDS: (state, ids) => {
+            state.selectedCardIds = ids;
+        },
+        CLEAR_SELECTED_CARD_IDS: state => {
+            state.selectedCardIds = [];
+        },
+        SET_DECK: (state, ids) => {
+            state.deck = ids;
+        }
+    },
+    actions: {
+        handleCardClick: ({ state, getters, commit }, cardId) => {
+            const newSelectedCardIds = state.selectedCardIds.includes(cardId)
+                ? state.selectedCardIds.filter(selectedCardId => selectedCardId !== cardId)
+                : state.selectedCardIds.concat(cardId);
+
+            commit('SET_SELECTED_CARD_IDS', newSelectedCardIds);
+
+            if (getters.isSelectionASet) {
+                commit('SET_DECK', state.deck.filter(id => !state.selectedCardIds.includes(id)));
             }
 
-            state.set.push(cardId);
+            if (getters.isSelectionFull) {
+                commit('CLEAR_SELECTED_CARD_IDS');
+            }
         }
     },
     getters: {
         board: ({ deck }) => deck.slice(0, 12),
-        setLength: ({ set }) => set.length,
-        isSetFull: (state, { setLength }) => setLength === 3,
-        isSet: ({ set }, { isSetFull }) => isSetFull && isSet(set)
+        selectedCardIdsLength: ({ selectedCardIds }) => selectedCardIds.length,
+        isSelectionFull: (state, { selectedCardIdsLength }) => selectedCardIdsLength === 3,
+        isSelectionASet: ({ selectedCardIds }, { isSelectionFull }) => isSet(selectedCardIds)
     }
 });
 
