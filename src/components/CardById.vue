@@ -2,46 +2,39 @@
     set-card(v-bind="card")
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import SetCard from './SetCard.vue';
-import { mapState, mapActions } from 'vuex';
-import { cardObjects } from '../set';
+import { cardObjects, CardObject } from '../set';
 
-export default {
+export default Vue.extend({
     name: 'card-by-id',
     components: {
         SetCard
     },
     props: {
-        id: Number
-    },
-    methods: {
-        ...mapActions([
-            'handleCardClick'
-        ])
+        id: Number,
+        selectedCardIds: Array,
     },
     computed: {
-        ...mapState([
-            'selectedCardIds'
-        ]),
-        isSelected() {
+        isSelected(): boolean {
             return this.selectedCardIds.includes(this.id);
         },
-        cardObject() {
+        cardObject(): CardObject {
             return cardObjects[this.id];
         },
-        handleClick() {
-            return this.handleCardClick.bind(null, this.id)
+        handleClick(): () => void {
+            return this.$store.dispatch.bind(null, 'HANDLE_CARD_CLICK', this.id);
         },
         card() {
             return {
+                ...this.cardObject,
                 classes: {
                     selected: this.isSelected
                 },
-                handleClick: this.handleClick,
-                ...this.cardObject
+                handleClick: this.handleClick
             };
         }
     }
-};
+});
 </script>

@@ -21,25 +21,32 @@ export const numberOfCards = cardArrays.length;
 // [0, 1, ..., numberOfCards - 1]
 export const deck = knuthShuffle(Array.from(Array(numberOfCards).keys()));
 
-export const cardObjects = cardArrays.map(c => ({
+export interface CardObject {
+    number: number;
+    color: string;
+    shape: string;
+    fill: string;
+};
+
+export const cardObjects: CardObject[] = cardArrays.map(c => ({
     number: numbers[c[0]],
     color: colors[c[1]],
     shape: shapes[c[2]],
     fill: fills[c[3]]
 }));
 
-export const isSet = set => {
+export const isSet = (set: number[]): boolean => {
     if (set.length < numberOfOptionsPerAttribute) {
         return false;
     }
 
     const cardRows = set.map(cardId => cardArrays[cardId]);
-    const attributeRows = transpose(cardRows);
+    const attributeRows = transpose(cardRows) as number[][];
 
-    return attributeRows.every(allSameOrAllDifferent)
+    return attributeRows.every(allSameOrAllDifferent);
 }
 
-function allSameOrAllDifferent(options) {
+function allSameOrAllDifferent(options: number[]) {
     const uniqueValueCount = (new Set(options)).size;
 
     return uniqueValueCount === 1

@@ -6,8 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        selectedCardIds: [],
-        deck
+        selectedCardIds: [] as number[],
+        deck,
     },
     mutations: {
         SET_SELECTED_CARD_IDS: (state, ids) => {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        handleCardClick: ({ state, getters, commit }, cardId) => {
+        HANDLE_CARD_CLICK: ({ state, getters, commit }, cardId) => {
             const newSelectedCardIds = state.selectedCardIds.includes(cardId)
                 ? state.selectedCardIds.filter(selectedCardId => selectedCardId !== cardId)
                 : state.selectedCardIds.concat(cardId);
@@ -44,4 +44,3 @@ export default new Vuex.Store({
         isSelectionASet: ({ selectedCardIds }, { isSelectionFull }) => isSet(selectedCardIds)
     }
 });
-

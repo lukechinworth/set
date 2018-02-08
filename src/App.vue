@@ -1,21 +1,24 @@
 <template lang="pug">
     #app
-        card-by-id(v-for="cardId in board", :id="cardId", :key="cardId")
+        card-by-id(v-for="cardId in board", :id="cardId", :selectedCardIds="selectedCardIds", :key="cardId")
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue';
 import CardById from './components/CardById.vue';
-import { mapGetters } from 'vuex';
 
-export default {
+export default Vue.extend({
     name: 'app',
     components: {
         CardById
     },
     computed: {
-        ...mapGetters([
-            'board'
-        ])
+        board(): number[] {
+            return this.$store.getters.board;
+        },
+        selectedCardIds(): number[] {
+            return this.$store.state.selectedCardIds;
+        },
     }
-};
+});
 </script>
