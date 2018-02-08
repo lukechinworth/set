@@ -10,11 +10,11 @@ import { cardObjects, CardObject } from '../set';
 export default Vue.extend({
     name: 'card-by-id',
     components: {
-        SetCard
+        SetCard,
     },
     props: {
         id: Number,
-        selectedCardIds: Array,
+        selectedCardIds: Array as (() => number[]),
     },
     computed: {
         isSelected(): boolean {
@@ -30,11 +30,11 @@ export default Vue.extend({
             return {
                 ...this.cardObject,
                 classes: {
-                    selected: this.isSelected
+                    selected: this.isSelected,
                 },
-                handleClick: this.handleClick
+                handleClick: this.handleClick,
             };
-        }
-    }
+        },
+    },
 });
 </script>

@@ -26,13 +26,13 @@ export interface CardObject {
     color: string;
     shape: string;
     fill: string;
-};
+}
 
 export const cardObjects: CardObject[] = cardArrays.map(c => ({
     number: numbers[c[0]],
     color: colors[c[1]],
     shape: shapes[c[2]],
-    fill: fills[c[3]]
+    fill: fills[c[3]],
 }));
 
 export const isSet = (set: number[]): boolean => {
@@ -44,11 +44,11 @@ export const isSet = (set: number[]): boolean => {
     const attributeRows = transpose(cardRows) as number[][];
 
     return attributeRows.every(allSameOrAllDifferent);
-}
+};
 
 function allSameOrAllDifferent(options: number[]) {
     const uniqueValueCount = (new Set(options)).size;
 
     return uniqueValueCount === 1
-        || uniqueValueCount === options.length
+        || uniqueValueCount === options.length;
 }

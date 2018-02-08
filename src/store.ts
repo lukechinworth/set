@@ -18,7 +18,7 @@ export default new Vuex.Store({
         },
         SET_DECK: (state, ids) => {
             state.deck = ids;
-        }
+        },
     },
     actions: {
         HANDLE_CARD_CLICK: ({ state, getters, commit }, cardId) => {
@@ -35,12 +35,12 @@ export default new Vuex.Store({
             if (getters.isSelectionFull) {
                 commit('CLEAR_SELECTED_CARD_IDS');
             }
-        }
+        },
     },
     getters: {
         board: ({ deck }) => deck.slice(0, 12),
         selectedCardIdsLength: ({ selectedCardIds }) => selectedCardIds.length,
         isSelectionFull: (state, { selectedCardIdsLength }) => selectedCardIdsLength === 3,
-        isSelectionASet: ({ selectedCardIds }, { isSelectionFull }) => isSet(selectedCardIds)
-    }
+        isSelectionASet: ({ selectedCardIds }, { isSelectionFull }) => isSet(selectedCardIds),
+    },
 });

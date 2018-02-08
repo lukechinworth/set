@@ -5,20 +5,21 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapState, mapGetters } from 'vuex';
 import CardById from './components/CardById.vue';
 
 export default Vue.extend({
     name: 'app',
     components: {
-        CardById
+        CardById,
     },
     computed: {
-        board(): number[] {
-            return this.$store.getters.board;
-        },
-        selectedCardIds(): number[] {
-            return this.$store.state.selectedCardIds;
-        },
-    }
+        ...mapGetters([
+            'board',
+        ]),
+        ...mapState([
+            'selectedCardIds',
+        ]),
+    },
 });
 </script>
